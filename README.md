@@ -1,2 +1,2 @@
-# Filmes.Api
-Api de filmes
+# Central de Usuários
+Api para gestão de usuários.
