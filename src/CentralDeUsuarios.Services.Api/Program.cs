@@ -17,6 +17,3 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
-
-
-//02:36:22
