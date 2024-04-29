@@ -10,10 +10,8 @@ namespace CentralDeUsuarios.Infra.Data.Contexts;
 public class SqlServerContext : DbContext
 {
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        optionsBuilder.UseSqlServer(@"Data Source=FIO32001599;Initial Catalog=BD_CentralDeUsuarios;Integrated Security=True;TrustServerCertificate=True");
-    }
+    public SqlServerContext(DbContextOptions<SqlServerContext> dbContextOptions) : base(dbContextOptions)
+    { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
