@@ -3,8 +3,8 @@
 /// <summary>
 /// Interface para abstração dos repositórios
 /// </summary>
-public interface IBaseRepository<TEntity, TKey> 
-    where TEntity : IEntity<TKey>
+public interface IBaseRepository<TEntity, TKey>
+    where TEntity : class
 {
     void Create(TEntity entity);
     void Update(TEntity entity);

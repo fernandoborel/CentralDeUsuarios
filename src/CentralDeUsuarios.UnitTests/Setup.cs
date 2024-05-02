@@ -1,5 +1,7 @@
 ﻿using Bogus.Bson;
 using CentralDeUsuarios.Domain.Interfaces.Repositories;
+using CentralDeUsuarios.Domain.Interfaces.Services;
+using CentralDeUsuarios.Domain.Services;
 using CentralDeUsuarios.Infra.Data.Contexts;
 using CentralDeUsuarios.Infra.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -53,7 +55,11 @@ public class Setup : Xunit.Di.Setup
             //Injetando a classe UsuarioRepository 
             //na interface IUsuarioRepository
             services.AddTransient<IUsuarioRepository, UsuarioRepository>();
-            
+
+            //Injetando a classe UsuarioDomainService 
+            //na interface IUsuarioDomainService
+            services.AddTransient<IUsuarioDomainService, UsuarioDomainService>();
+
             #endregion
         });
     }

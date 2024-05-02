@@ -8,47 +8,29 @@ namespace CentralDeUsuarios.Infra.Data.Repositories;
 /// <summary>
 /// Classe de implementação do repositório de usuários.
 /// </summary>
-public class UsuarioRepository : IUsuarioRepository
+public class UsuarioRepository : BaseRepository<Usuario, Guid>, IUsuarioRepository
 {
     private readonly SqlServerContext _context;
 
-    public UsuarioRepository(SqlServerContext context)
+    public UsuarioRepository(SqlServerContext context) : base(context)
     {
         _context = context;
     }
 
-    public void Create(Usuario entity)
+    public override void Create(Usuario entity)
     {
         entity.Senha = MD5Helper.Encrypt(entity.Senha);
-        _context.Usuario.Add(entity);
-        _context.SaveChanges();
+        base.Create(entity);
     }
 
-    public void Update(Usuario entity)
+    public override void Update(Usuario entity)
     {
         entity.Senha = MD5Helper.Encrypt(entity.Senha);
-        _context.Usuario.Update(entity);
-        _context.SaveChanges();
-    }
-
-    public void Delete(Usuario entity)
-    {
-        _context.Usuario.Remove(entity);
-        _context.SaveChanges();
-    }
-
-    public List<Usuario> GetAll()
-    {
-        return _context.Usuario.ToList();
+        base.Update(entity);
     }
 
     public Usuario GetByEmail(string email)
     {
-        return _context.Usuario.FirstOrDefault(e => e.Email.Equals(email));
-    }
-
-    public Usuario GetById(Guid id)
-    {
-        return _context.Usuario.Find(id);
+        return _context.Usuario.FirstOrDefault(u => u.Email.Equals(email));
     }
 }
