@@ -44,4 +44,9 @@ public abstract class BaseRepository<TEntity, TKey> : IBaseRepository<TEntity, T
     {
         return _sqlServerContext.Set<TEntity>().Find(id);
     }
+
+    public void Dispose()
+    {
+        _sqlServerContext.Dispose();
+    }
 }
