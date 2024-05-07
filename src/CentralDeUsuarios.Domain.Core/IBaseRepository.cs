@@ -3,7 +3,7 @@
 /// <summary>
 /// Interface para abstração dos repositórios
 /// </summary>
-public interface IBaseRepository<TEntity, TKey>
+public interface IBaseRepository<TEntity, TKey> : IDisposable
     where TEntity : class
 {
     void Create(TEntity entity);
