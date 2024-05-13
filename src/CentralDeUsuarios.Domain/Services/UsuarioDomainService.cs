@@ -19,12 +19,17 @@ public class UsuarioDomainService : IUsuarioDomainService
 
     public void CriarUsuario(Usuario usuario)
     {
-        //não permite criar usuário com E-MAIL já existente
+        //não permite criar usuário com o mesmo e-mail
         DomainException.When(
                 _usuarioRepository.GetByEmail(usuario.Email) != null,
                 $"Já existe um usuário com o E-MAIL {usuario.Email}, tente outro."
                 );
 
         _usuarioRepository.Create(usuario);
+    }
+
+    public void Dispose()
+    {
+        _usuarioRepository.Dispose();
     }
 }
