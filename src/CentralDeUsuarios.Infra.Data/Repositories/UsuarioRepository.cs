@@ -10,11 +10,11 @@ namespace CentralDeUsuarios.Infra.Data.Repositories;
 /// </summary>
 public class UsuarioRepository : BaseRepository<Usuario, Guid>, IUsuarioRepository
 {
-    private readonly SqlServerContext _context;
+    private readonly SqlServerContext _sqlServerContext;
 
     public UsuarioRepository(SqlServerContext context) : base(context)
     {
-        _context = context;
+        _sqlServerContext = context;
     }
 
     public override void Create(Usuario entity)
@@ -31,6 +31,7 @@ public class UsuarioRepository : BaseRepository<Usuario, Guid>, IUsuarioReposito
 
     public Usuario GetByEmail(string email)
     {
-        return _context.Usuario.FirstOrDefault(u => u.Email.Equals(email));
+        return _sqlServerContext.Usuario
+            .FirstOrDefault(u => u.Email.Equals(email));
     }
 }
