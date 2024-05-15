@@ -19,6 +19,6 @@ public class UsuariosController : ControllerBase
     public IActionResult Post(CriarUsuarioCommand command)
     {
         _usuarioAppService.CriarUsuario(command);
-        return StatusCode(201);
+        return StatusCode(201, new { message = "Usuário criado com sucesso!", command });
     }
 }

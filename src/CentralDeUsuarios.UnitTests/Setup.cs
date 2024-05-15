@@ -42,7 +42,7 @@ public class Setup : Xunit.Di.Setup
             #region Capturar a connectionstring do arquivo appsettings.json
  
             var root = configurationBuilder.Build();
-            var connectionString = root.GetSection("ConnectionStrings").GetSection("CentralDeUsuarios").Value;
+            var connectionString = root.GetSection("ConnectionString").GetSection("CentralDeUsuarios").Value;
 
             #endregion
 

@@ -46,7 +46,7 @@ namespace CentralDeUsuarios.Infra.Data.Migrations
                         .IsUnique()
                         .HasFilter("[Email] IS NOT NULL");
 
-                    b.ToTable("Usuario", (string)null);
+                    b.ToTable("Usuario");
                 });
 #pragma warning restore 612, 618
         }
