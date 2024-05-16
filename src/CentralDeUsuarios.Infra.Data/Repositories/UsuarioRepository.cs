@@ -6,15 +6,20 @@ using CentralDeUsuarios.Infra.Data.Helpers;
 namespace CentralDeUsuarios.Infra.Data.Repositories;
 
 /// <summary>
-/// Classe de implementação do repositório de usuários.
+/// Classe para implementar o repositório de usuários
 /// </summary>
 public class UsuarioRepository : BaseRepository<Usuario, Guid>, IUsuarioRepository
 {
+    //atributo
     private readonly SqlServerContext _sqlServerContext;
 
-    public UsuarioRepository(SqlServerContext context) : base(context)
+    /// <summary>
+    /// Construtor para injeção de dependência
+    /// </summary>
+    public UsuarioRepository(SqlServerContext sqlServerContext)
+        : base(sqlServerContext)
     {
-        _sqlServerContext = context;
+        _sqlServerContext = sqlServerContext;
     }
 
     public override void Create(Usuario entity)
