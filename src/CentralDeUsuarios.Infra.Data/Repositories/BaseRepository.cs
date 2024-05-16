@@ -10,8 +10,12 @@ namespace CentralDeUsuarios.Infra.Data.Repositories;
 public abstract class BaseRepository<TEntity, TKey> : IBaseRepository<TEntity, TKey>
     where TEntity : class
 {
+    //atributo
     private readonly SqlServerContext _sqlServerContext;
 
+    /// <summary>
+    /// Construtor para injeção de dependência
+    /// </summary>
     protected BaseRepository(SqlServerContext sqlServerContext)
     {
         _sqlServerContext = sqlServerContext;

@@ -9,9 +9,11 @@ namespace CentralDeUsuarios.Infra.Data.Contexts;
 /// </summary>
 public class SqlServerContext : DbContext
 {
+    public SqlServerContext(DbContextOptions<SqlServerContext> dbContextOptions)
+        : base(dbContextOptions)
+    {
 
-    public SqlServerContext(DbContextOptions<SqlServerContext> dbContextOptions) : base(dbContextOptions)
-    { }
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

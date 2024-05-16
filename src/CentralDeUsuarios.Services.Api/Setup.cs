@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore;
 namespace CentralDeUsuarios.Services.Api;
 
 /// <summary>
-/// Classe para configurar o context de injeção de dependência.
+/// Classe para configuração o contexto de injeção de dependência do AspNet
 /// </summary>
 public static class Setup
 {
@@ -34,9 +34,11 @@ public static class Setup
     {
         builder.Services.Configure<MessageSettings>(builder.Configuration.GetSection("MessageSettings"));
         builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
+
         builder.Services.AddTransient<MessageQueueProducer>();
         builder.Services.AddTransient<MailHelper>();
     }
+
     public static void AddAutoMapperServices(this WebApplicationBuilder builder)
     {
         builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

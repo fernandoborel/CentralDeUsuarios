@@ -6,7 +6,7 @@ using CentralDeUsuarios.Domain.Interfaces.Services;
 namespace CentralDeUsuarios.Domain.Services;
 
 /// <summary>
-/// Implementação do serviço de domínio de usuário
+/// Implementação dos serviços de domínio de usuários
 /// </summary>
 public class UsuarioDomainService : IUsuarioDomainService
 {
@@ -19,11 +19,10 @@ public class UsuarioDomainService : IUsuarioDomainService
 
     public void CriarUsuario(Usuario usuario)
     {
-        //não permite criar usuário com o mesmo e-mail
         DomainException.When(
                 _usuarioRepository.GetByEmail(usuario.Email) != null,
-                $"Já existe um usuário com o E-MAIL {usuario.Email}, tente outro."
-                );
+                $"O email {usuario.Email} já está cadastrado, tente outro."
+            );
 
         _usuarioRepository.Create(usuario);
     }

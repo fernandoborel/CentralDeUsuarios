@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace CentralDeUsuarios.Infra.Data.Mappings;
 
 /// <summary>
-/// Classe de mapeamento ORM da entidade Usuario.
+/// Classe de mapeamento ORM da entidade usuário
 /// </summary>
 public class UsuarioMap : IEntityTypeConfiguration<Usuario>
 {
