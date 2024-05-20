@@ -5,6 +5,7 @@ using CentralDeUsuarios.Domain.Entities;
 using CentralDeUsuarios.Domain.Interfaces.Services;
 using CentralDeUsuarios.Infra.Messages.Models;
 using CentralDeUsuarios.Infra.Messages.Producers;
+using CentralDeUsuarios.Infra.Messages.ValueObjects;
 using FluentValidation;
 using Newtonsoft.Json;
 
@@ -26,6 +27,8 @@ public class UsuarioAppService : IUsuarioAppService
 
     public void CriarUsuario(CriarUsuarioCommand command)
     {
+        #region Criando e validando usuário
+
         var usuario = _mapper.Map<Usuario>(command);
 
         var validate = usuario.Validate;
@@ -34,14 +37,24 @@ public class UsuarioAppService : IUsuarioAppService
 
         _usuarioDomainService.CriarUsuario(usuario);
 
-        //conteúdo
+        #endregion
+
+        #region Mensageria
+
         var _messageQueueModel = new MessageQueueModel
         {
-            Conteudo = JsonConvert.SerializeObject(usuario)
+            Tipo = TipoMensagem.CONFIRMACAO_DE_CADASTRO,
+            Conteudo = JsonConvert.SerializeObject(new UsuariosMessageVO
+            {
+                Id = usuario.Id,
+                Nome = usuario.Nome,
+                Email = usuario.Email,
+            })
         };
 
-        // Enviar mensagem para a fila
         _messageQueueProducer.Create(_messageQueueModel);
+
+        #endregion
     }
 
     public void Dispose()
