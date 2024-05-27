@@ -3,6 +3,8 @@ using CentralDeUsuarios.Application.Commands;
 using CentralDeUsuarios.Application.Interfaces;
 using CentralDeUsuarios.Domain.Entities;
 using CentralDeUsuarios.Domain.Interfaces.Services;
+using CentralDeUsuarios.Infra.Logs.Interfaces;
+using CentralDeUsuarios.Infra.Logs.Models;
 using CentralDeUsuarios.Infra.Messages.Models;
 using CentralDeUsuarios.Infra.Messages.Producers;
 using CentralDeUsuarios.Infra.Messages.ValueObjects;
@@ -15,14 +17,16 @@ public class UsuarioAppService : IUsuarioAppService
 {
     private readonly IUsuarioDomainService _usuarioDomainService;
     private readonly MessageQueueProducer _messageQueueProducer;
+    private readonly ILogUsuariosPersistence _logUsuariosPersistence;
     private readonly IMapper _mapper;
 
 
-    public UsuarioAppService(IUsuarioDomainService usuarioDomainService, MessageQueueProducer messageQueueProducer, IMapper mapper)
+    public UsuarioAppService(IUsuarioDomainService usuarioDomainService, MessageQueueProducer messageQueueProducer, IMapper mapper, ILogUsuariosPersistence logUsuariosPersistence)
     {
         _usuarioDomainService = usuarioDomainService;
         _messageQueueProducer = messageQueueProducer;
         _mapper = mapper;
+        _logUsuariosPersistence = logUsuariosPersistence;
     }
 
     public void CriarUsuario(CriarUsuarioCommand command)
@@ -53,6 +57,20 @@ public class UsuarioAppService : IUsuarioAppService
         };
 
         _messageQueueProducer.Create(_messageQueueModel);
+
+        #endregion
+
+        #region Gravando o log da operação
+
+        var logUsuariosModel = new LogUsuarioModel
+        {
+            UsuarioId = usuario.Id,
+            DataHora = DateTime.Now,
+            Operacao = "Criação de usuário",
+            Detalhes = JsonConvert.SerializeObject(new { usuario.Nome, usuario.Email })
+        };
+
+        _logUsuariosPersistence.Create(logUsuariosModel);
 
         #endregion
     }

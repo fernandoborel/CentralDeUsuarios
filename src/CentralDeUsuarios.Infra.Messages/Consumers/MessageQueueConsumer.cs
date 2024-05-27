@@ -56,20 +56,15 @@ public class MessageQueueConsumer : BackgroundService
     /// </summary>
     protected override Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        //componente para realizar a leitura
         var consumer = new EventingBasicConsumer(_model);
 
-        //fazendo a leitura da fila
         consumer.Received += (sender, args) =>
         {
-            //ler o conteúdo da msg
             var contentArray = args.Body.ToArray();
             var contentString = Encoding.UTF8.GetString(contentArray);
 
-            //deserialize
             var messageQueueModel = JsonConvert.DeserializeObject<MessageQueueModel>(contentString);
 
-            //verificar o tipo da msg
             switch (messageQueueModel.Tipo)
             {
                 case TipoMensagem.CONFIRMACAO_DE_CADASTRO:
@@ -77,10 +72,8 @@ public class MessageQueueConsumer : BackgroundService
                     {
                         var usuariosMessageVO = JsonConvert.DeserializeObject<UsuariosMessageVO>(messageQueueModel.Conteudo);
 
-                        //enviar email
                         EnviarMensagemDeConfirmacaoDeCadastro(usuariosMessageVO);
 
-                        //comunicar ao RabbitMQ que a msg foi processada
                         _model.BasicAck(args.DeliveryTag, false);
                     }
 
@@ -92,7 +85,6 @@ public class MessageQueueConsumer : BackgroundService
             }
         };
 
-        //executando o consumidor
         _model.BasicConsume(_messageSettings.Queue, false, consumer);
 
         return Task.CompletedTask;
