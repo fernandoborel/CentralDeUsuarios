@@ -11,6 +11,7 @@ Setup.AddRegisterServices(builder);
 Setup.AddEntityFrameworkServices(builder);
 Setup.AddMessageServices(builder);
 Setup.AddAutoMapperServices(builder);
+Setup.AddMongoDBServices(builder);
 
 //Consumidor da mensageria
 builder.Services.AddHostedService<MessageQueueConsumer>();
@@ -29,4 +30,4 @@ app.MapControllers();
 
 app.Run();
 
-//02:31:02
+//03:59:30
