@@ -13,7 +13,7 @@ Setup.AddMessageServices(builder);
 Setup.AddAutoMapperServices(builder);
 Setup.AddMongoDBServices(builder);
 
-//Consumidor da mensageria
+//Mensageria
 builder.Services.AddHostedService<MessageQueueConsumer>();
 
 var app = builder.Build();
@@ -30,4 +30,5 @@ app.MapControllers();
 
 app.Run();
 
-//03:59:30
+//Declaração publica da classe para testes de integração
+public partial class Program { }

@@ -64,6 +64,7 @@ public class UsuarioAppService : IUsuarioAppService
 
         var logUsuariosModel = new LogUsuarioModel
         {
+            Id = Guid.NewGuid(),
             UsuarioId = usuario.Id,
             DataHora = DateTime.Now,
             Operacao = "Criação de usuário",
